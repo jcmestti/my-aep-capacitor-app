@@ -1,3 +1,4 @@
-export interface ExamplePlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+export interface AdobeAepPlugin {
+  configure(options: { appId: string }): Promise<{ success: boolean }>;
+  trackEvent(options: { xdm: Record<string, any> }): Promise<{ success: boolean }>;
 }

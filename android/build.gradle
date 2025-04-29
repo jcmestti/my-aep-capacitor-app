@@ -12,10 +12,12 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.7.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22"
     }
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     namespace "com.vlss.plugins.aep"
@@ -37,8 +39,11 @@ android {
         abortOnError false
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_21
-        targetCompatibility JavaVersion.VERSION_21
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
     }
 }
 
@@ -55,4 +60,17 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+
+    implementation platform('com.adobe.marketing.mobile:sdk-bom:3.10.0')
+    implementation 'com.adobe.marketing.mobile:core'
+    implementation 'com.adobe.marketing.mobile:lifecycle'
+    implementation 'com.adobe.marketing.mobile:identity'
+    implementation 'com.adobe.marketing.mobile:edge'
+    implementation 'com.adobe.marketing.mobile:edgeidentity'
+    implementation 'com.adobe.marketing.mobile:edgeconsent'
+    implementation 'com.adobe.marketing.mobile:assurance'
+    implementation 'com.adobe.marketing.mobile:userprofile'
+    implementation 'com.adobe.marketing.mobile:signal'
+    implementation 'com.adobe.marketing.mobile:audience'
+    implementation 'com.adobe.marketing.mobile:target'
 }

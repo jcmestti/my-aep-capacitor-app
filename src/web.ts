@@ -1,10 +1,15 @@
 import { WebPlugin } from '@capacitor/core';
 
-import type { ExamplePlugin } from './definitions';
+import type { AdobeAepPlugin } from './definitions';
 
-export class ExampleWeb extends WebPlugin implements ExamplePlugin {
-  async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log('ECHO', options);
-    return options;
+export class AdobeAepWeb extends WebPlugin implements AdobeAepPlugin {
+  async configure(_: { appId: string }): Promise<{ success: boolean }> {
+    console.warn('[AdobeAepWeb] configure() is not supported on web.');
+    return { success: false };
+  }
+
+  async trackEvent(_: { xdm: Record<string, any> }): Promise<{ success: boolean }> {
+    console.warn('[AdobeAepWeb] trackEvent() is not supported on web.');
+    return { success: false };
   }
 }
