@@ -2,11 +2,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "AepPlugin",
+    name: "AdobeAepPlugin",
     platforms: [.iOS(.v14)],
     products: [
         .library(
-            name: "AepPlugin",
+            name: "AdobeAepPlugin",
             targets: ["ExamplePlugin"])
     ],
     dependencies: [
