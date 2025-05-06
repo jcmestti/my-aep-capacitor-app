@@ -1,41 +1,35 @@
-import Foundation
-import AEPCore
-import AEPEdge
-import AEPEdgeIdentity
-import AEPEdgeConsent
-import AEPLifecycle
-import AEPSignal
-import AEPTarget
-import AEPAudience
-import AEPUserProfile
-import AEPAssurance
+import Capacitor
 
-@objc public class AdobeAep: NSObject {
-    
-    @objc public func configure(appId: String, completion: @escaping () -> Void) {
-        MobileCore.setLogLevel(.debug)
-        MobileCore.registerExtensions([
-            Lifecycle.self,
-            Signal.self,
-            Identity.self,
-            Edge.self,
-            AEPEdgeIdentity.Identity.self,
-            AEPEdgeConsent.Consent.self,
-            UserProfile.self,
-            Audience.self,
-            Assurance.self,
-            Target.self
-        ]) {
-            MobileCore.configureWith(appId: appId)
-            MobileCore.lifecycleStart(additionalContextData: ["contextDataKey": "contextDataVal"])
-            completion()
+@objc(AdobeAep)
+public class AdobeAepPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "AdobeAep"
+    public let jsName = "AdobeAep"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "configure", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "trackEvent", returnType: CAPPluginReturnPromise)
+    ]
+
+    private let implementation = AdobeAepImplementation()
+
+    @objc func configure(_ call: CAPPluginCall) {
+        guard let appId = call.getString("appId"), !appId.isEmpty else {
+            call.reject("appId is required")
+            return
+        }
+
+        implementation.configure(appId: appId) {
+            call.resolve(["success": true])
         }
     }
 
-    @objc public func trackEvent(xdm: [String: Any], completion: @escaping () -> Void) {
-        let event = ExperienceEvent(xdm: xdm)
-        Edge.sendEvent(experienceEvent: event) { _ in
-            completion()
+    @objc func trackEvent(_ call: CAPPluginCall) {
+        guard let xdm = call.getObject("xdm") as? [String: Any] else {
+            call.reject("xdm must be an object")
+            return
+        }
+
+        implementation.trackEvent(xdm: xdm) {
+            call.resolve(["success": true])
         }
     }
 }

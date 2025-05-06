@@ -1,5 +1,5 @@
 {
-  "name": "aep-plugin",
+  "name": "adobe-aep",
   "version": "0.0.2",
   "description": "Integration with Adobe Experience Platform & Ionic.",
   "main": "dist/plugin.cjs.js",
@@ -13,7 +13,7 @@
     "ios/Sources",
     "ios/Tests",
     "Package.swift",
-    "AepPlugin.podspec"
+    "AdobeAep.podspec"
   ],
   "author": "",
   "license": "MIT",
@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
-    "verify:ios": "xcodebuild -scheme AepPlugin -destination generic/platform=iOS",
+    "verify:ios": "xcodebuild -scheme AdobeAepPlugin -destination generic/platform=iOS",
     "verify:android": "cd android && ./gradlew clean build test && cd ..",
     "verify:web": "npm run build",
     "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
