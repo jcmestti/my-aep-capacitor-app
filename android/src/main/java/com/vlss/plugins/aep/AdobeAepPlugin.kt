@@ -38,6 +38,7 @@ class AdobeAepPlugin : Plugin() {
         }
     }
 
+    /*
     @PluginMethod
     fun trackEvent(call: PluginCall) {
         val xdmJson = call.getObject("xdm") ?: run {
@@ -48,6 +49,46 @@ class AdobeAepPlugin : Plugin() {
         val xdmMap = xdmJson.toMap()
         implementation.trackExperienceEvent(xdmMap)
 
+        val ret = JSObject()
+        ret.put("success", true)
+        call.resolve(ret)
+    }
+    */
+
+    @PluginMethod
+    fun setConsent(call: PluginCall) {
+        val consentValue = call.getString("consent")
+        if (consentValue.isNullOrBlank()) {
+            call.reject("Missing 'consent' value")
+            return
+        }
+
+        implementation.setConsent(consentValue)
+
+        val ret = JSObject()
+        ret.put("success", true)
+        call.resolve(ret)
+    }
+
+    @PluginMethod
+    fun trackScreenView(call: PluginCall) {
+        // Call the implementation method
+        implementation.trackScreenView()
+
+        val ret = JSObject()
+        ret.put("success", true)
+        call.resolve(ret)
+    }
+
+    @PluginMethod
+    fun startAssurance(call: PluginCall) {
+        val url = call.getString("url")
+        if (url.isNullOrBlank()) {
+            call.reject("Missing Assurance session URL")
+            return
+        }
+
+        implementation.startAssuranceSession(url)
         val ret = JSObject()
         ret.put("success", true)
         call.resolve(ret)
