@@ -65,7 +65,7 @@ window.startAssurance = async () => {
   console.log('[CLICK] Start Assurance button clicked');
   try {
     await AdobeAep.startAssurance({
-      url: 'aepplugin://?adb_validation_sessionid=bc4c3e97-890a-4eeb-aa28-bb591670f3e3' // replace with your real session link
+      url: 'YOUR_URL' // replace with your real session link
     });
     console.log('🧪 Adobe Assurance session started');
   } catch (error) {
